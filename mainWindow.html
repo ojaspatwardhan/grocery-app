@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <!--Import Google Icon Font-->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+      <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+      <!-- Compiled and minified CSS -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Main Window</title>
+  </head>
+  <body>
+    <nav>
+      <div class="nav-wrapper">
+        <a class="brand-logo center">List App</a>
+      </div>
+    </nav>
+    <button id="click" type="button" class="btn-floating btn-md waves-effect waves-light red"><i class="material-icons">add</i></button>
+    <ul>
+    </ul>
+
+    <script>
+      let buttonWindow;
+      const electron = require("electron");
+      const {ipcRenderer} = electron;
+      const ul = document.querySelector("ul");
+      const url = require("url");
+      const path = require("path");
+      const BrowserWindow = electron.remote.BrowserWindow;
+      const { app, Menu, ipcMain } = electron;
+
+      //Add Item
+      ipcRenderer.on("item:add", function(e, item) {
+        ul.className = "collection";
+        const li = document.createElement("li");
+        li.className = "collection-item";
+        const itemText = document.createTextNode(item);
+        li.appendChild(itemText);
+        ul.appendChild(li);
+      });
+
+      //Event handler for click
+      const click = document.getElementById("click");
+      click.addEventListener("click", function(e) {
+        buttonWindow = new BrowserWindow({
+          width: 500,
+          height: 300,
+          title: "Button Window"
+        });
+        buttonWindow.loadURL(url.format({
+          pathname: path.join(__dirname, "buttonWindow.html"),
+          protocol: "file:",
+          slashes: true
+        }));
+      });
+    </script>
+    <!--JavaScript at end of body for optimized loading-->
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+  </body>
+</html>
