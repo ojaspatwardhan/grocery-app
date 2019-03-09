@@ -1,25 +1,30 @@
 <!DOCTYPE HTML>
 <html>
   <head>
-    <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
     <!--Import Google Icon Font-->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="contents/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <!-- Bootstrap and JavaScript scripts -->
+    <script>let $ = require('jquery');</script>
+    <script>require('popper.js');</script>
+    <script>require('bootstrap');</script>
     <title>Add</title>
   </head>
   <body>
-    <div class="container">
-      <form>
-        <div class="row">
-          <div class="input-field col s6 offset-s3">
-            <input id="itemName" type="text" class="validate">
-            <label for="itemName">Item Name</label>
-          </div>
+    <div class="container-fluid">
+      <div class="row mt-4">
+        <div class="col-12">
+          <form>
+            <div class="input-group mb-3">
+              <input id="itemName" type="text" class="form-control" placeholder="Name of Item" />
+              <div class="input-group-append">
+                <button type="submit" class="btn btn-md btn-outline-secondary">Add</button>
+              </div>
+            </div>
+          </form>
         </div>
-        <div class="row">
-          <button type="submit" class="waves-effect waves-light btn light-blue col s6 offset-s3"><i class="material-icons left">add</i>button</button>
-        </div>
-      </form>
+      </div>
     </div>
     <script>
       const electron = require("electron");
