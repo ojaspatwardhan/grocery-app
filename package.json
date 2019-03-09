@@ -15,6 +15,9 @@
     "electron-prebuilt": "^1.4.13",
     "electron-reload": "^1.2.5",
     "jsreport-electron-pdf": "^3.0.0",
-    "materialize-css": "^1.0.0-rc.2"
+    "materialize-css": "^1.0.0-rc.2",
+    "jquery": "^3.3.1",
+    "bootstrap": "^4.3.1",
+    "popper.js": "^1.14.7"
   }
 }
