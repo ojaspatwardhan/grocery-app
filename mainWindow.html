@@ -9,7 +9,7 @@
       <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">-->
 
       <!-- Bootstrap CSS -->
-      <link rel="stylesheet" href="./contents/bootstrap/4.1.3/css/bootstrap.min.css" />
+      <link rel="stylesheet" href="contents/bootstrap/4.3.1/css/bootstrap.min.css" />
       <!-- Bootstrap and JavaScript scripts -->
       <script>let $ = require('jquery');</script>
       <script>require('popper.js');</script>
@@ -21,12 +21,13 @@
     <title>Main Window</title>
   </head>
   <body>
-    <nav>
-      <div class="nav-wrapper">
-        <a class="brand-logo center">List App</a>
+    <div class="container-fluid">
+      <div class="row mt-4">
+        <div class="col-6">
+          <button id="click" type="button" class="btn btn-md btn-outline-info">Add</button>
+        </div>
       </div>
-    </nav>
-    <button id="click" type="button" class="btn-floating btn-md waves-effect waves-light red"><i class="material-icons">add</i></button>
+    </div>
     <ul>
     </ul>
 
