@@ -2,7 +2,7 @@ const electron = require("electron");
 const url = require("url");
 const path = require("path");
 
-const { app, BrowserWindow, Menu, ipcMain } = electron;
+const { app, BrowserWindow, Menu, ipcMain, globalShortcut } = electron;
 
 //Setting Environment
 process.env.NODE_ENV = "";
@@ -14,6 +14,7 @@ let addWindow;
 
 //Listen for app to be ready
 app.on('ready', function() {
+
   //Create new window
   mainWindow = new BrowserWindow({});
 
@@ -95,6 +96,22 @@ const menuTemplate = [
       {
         label: "Remove",
         role: "services"
+      }
+    ]
+  },
+  {
+    label: "View",
+    submenu: [
+      {
+        label: "Enter full screen",
+        accelerator: process.platform === "darwin" ? "Ctrl+Command+F" : "Ctrl+F",
+        click(item, focusedWindow) {
+          if(focusedWindow.isFullScreen()) {
+            focusedWindow.setFullScreen(false);
+          } else {
+            focusedWindow.setFullScreen(true);
+          }
+        }
       }
     ]
   }
