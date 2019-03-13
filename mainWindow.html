@@ -1,74 +1,85 @@
 <!DOCTYPE HTML>
 <html lang="en">
-  <head>
-    <!--Import Google Icon Font-->
-      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <head>
+        <!--Import Google Icon Font-->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-      <!-- Bootstrap CSS -->
-      <link rel="stylesheet" href="contents/bootstrap/4.3.1/css/bootstrap.min.css" />
-      <!-- Bootstrap and JavaScript scripts -->
-      <script>let $ = require('jquery');</script>
-      <script>require('popper.js');</script>
-      <script>require('bootstrap');</script>
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="contents/bootstrap/4.3.1/css/bootstrap.min.css" />
+        <!-- Bootstrap and JavaScript scripts -->
+        <script>let $ = require('jquery');</script>
+        <script>require('popper.js');</script>
+        <script>require('bootstrap');</script>
 
 
-    <!--Let browser know website is optimized for mobile-->
-      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Main Window</title>
-  </head>
-  <body>
+        <!--Let browser know website is optimized for mobile-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Main Window</title>
+    </head>
+    <body>
     <div class="container-fluid">
-      <div class="row mt-3">
-        <div class="col-12">
-          <ul>
-          </ul>
+        <div class="row mt-3">
+            <div class="col-12">
+                <ul>
+                </ul>
+            </div>
         </div>
-      </div>
-      <div class="row mt-2">
-        <div class="col-6">
-          <button id="click" type="button" class="btn btn-md btn-outline-info">Add</button>
+        <div class="row mt-2">
+            <div class="col-6">
+                <button id="click" type="button" class="btn btn-md btn-outline-info">Add</button>
+            </div>
         </div>
-      </div>
     </div>
 
     <script>
-      let buttonWindow;
-      const electron = require("electron");
-      const {ipcRenderer} = electron;
-      const ul = document.querySelector("ul");
-      const url = require("url");
-      const path = require("path");
-      const BrowserWindow = electron.remote.BrowserWindow;
-      const { app, Menu, ipcMain } = electron;
+        const electron = require("electron");
+        const {ipcRenderer} = electron;
+        const ul = document.querySelector("ul");
+        const mysql = require('mysql');
 
-      //Add Item
-      ipcRenderer.on("item:add", function(e, item) {
-        ul.className = "collection";
-        const li = document.createElement("li");
-        li.className = "collection-item";
-        const itemText = document.createTextNode(item);
-        li.appendChild(itemText);
-        ul.appendChild(li);
-      });
-
-      //Event handler for click
-      const click = document.getElementById("click");
-      click.addEventListener("click", function(e) {
-        buttonWindow = new BrowserWindow({
-          width: 500,
-          height: 300,
-          title: "Button Window"
+        // MySQL database connectivity
+        var connection = mysql.createConnection({
+            host: 'localhost',
+            user: 'root',
+            password: 'root',
+            database: 'assignment2'
         });
-        buttonWindow.loadURL(url.format({
-          pathname: path.join(__dirname, "buttonWindow.html"),
-          protocol: "file:",
-          slashes: true
-        }));
-      });
+
+        connection.connect(function (err) {
+            if(err) {
+                console.log(err, "Connection failed");
+            }
+        });
+
+        $query = "SELECT * FROM person";
+
+        connection.query($query, function (err, rows, fields) {
+            if(err) {
+                console.log(err);
+            } else {
+                console.log(rows, fields);
+            }
+        });
+
+        connection.end(function () {
+            console.log("Connection closed");
+        });
+
+        //Add Item
+        ipcRenderer.on("item:add", function(e, item) {
+            ul.className = "collection";
+            const li = document.createElement("li");
+            li.className = "collection-item";
+            const itemText = document.createTextNode(item);
+            li.appendChild(itemText);
+            ul.appendChild(li);
+        });
+
+        //Event handler for click
+        const click = document.getElementById("click");
+        click.addEventListener("click", function() {
+            ipcRenderer.send("click");
+        });
     </script>
-    <!--JavaScript at end of body for optimized loading-->
-    <script type="text/javascript" src="js/materialize.min.js"></script>
-    <!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
-  </body>
+    </body>
 </html>

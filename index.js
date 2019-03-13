@@ -5,7 +5,7 @@ const path = require("path");
 const { app, BrowserWindow, Menu, ipcMain } = electron;
 
 //Setting Environment
-process.env.NODE_ENV = "production";
+process.env.NODE_ENV = "";
 
 require('electron-reload')(__dirname);
 
@@ -56,6 +56,11 @@ function createAddWindow() {
     app.quit();
   });
 }
+
+// Call createAddWindow
+ipcMain.on("click", () => {
+  createAddWindow();
+});
 
 //Catch item:add
 ipcMain.on("item:add", function(e, item) {
